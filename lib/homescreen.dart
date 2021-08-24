@@ -1,3 +1,4 @@
+import 'package:cfbuddy/Drawer/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'profile.dart';
@@ -25,17 +26,19 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawer: Drawer(
         child: ListView(
-          children: const [
-            DrawerHeader(child: FlutterLogo()),
+          children: [
+            const DrawerHeader(child: FlutterLogo()),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text("Settings"),
+              leading: const Icon(Icons.settings),
+              title: const Text("Settings"),
+              onTap: () => Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Settings())),
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.person),
               title: Text("Change Profile"),
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.info),
               title: Text("About"),
             )

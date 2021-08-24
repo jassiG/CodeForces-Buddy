@@ -1,15 +1,15 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'homescreen.dart';
-import 'dart:ui';
+import 'Drawer/settings.dart';
 
-void main(){
-  runApp(const MyApp());
+void main() {
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget{
-  const MyApp({Key? key}) : super(key: key);
-
+class MyApp extends StatelessWidget {
+  MyApp({Key? key}) : super(key: key);
+  String themeS = "System"; //Settings().themeSettings"";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,7 +17,11 @@ class MyApp extends StatelessWidget{
       theme: FlexColorScheme.light(scheme: FlexScheme.deepBlue).toTheme,
       darkTheme: FlexColorScheme.dark(scheme: FlexScheme.deepBlue).toTheme,
       //theme: Theme(data: ThemeData(backgroundColor: Color.fromRGBO(r, g, b, opacity)),),
-      themeMode: ThemeMode.system,
+      themeMode: themeS == "System"
+          ? ThemeMode.system
+          : themeS == "Light"
+              ? ThemeMode.light
+              : ThemeMode.dark,
       home: const HomeScreen(),
     );
   }
