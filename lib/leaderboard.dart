@@ -19,16 +19,16 @@ class _LeaderBoardState extends State<LeaderBoard> {
         width: double.infinity,
         height: double.infinity,
         alignment: Alignment.center,
-        decoration: const ShapeDecoration(
-          color: Colors.white,
-          shadows: [
+        decoration: ShapeDecoration(
+          color: Theme.of(context).cardColor,
+          shadows: const [
             BoxShadow(
                 blurRadius: 15.0,
                 offset: Offset(0, 0),
                 color: Colors.black12,
                 spreadRadius: 5.0)
           ],
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(40.0),
               topRight: Radius.circular(40.0),

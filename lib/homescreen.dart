@@ -23,6 +23,25 @@ class _HomeScreenState extends State<HomeScreen> {
             ? const Text("Profile")
             : const Text("LeaderBoard"),
       ),
+      drawer: Drawer(
+        child: ListView(
+          children: const [
+            DrawerHeader(child: FlutterLogo()),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("Settings"),
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text("Change Profile"),
+            ),
+            ListTile(
+              leading: Icon(Icons.info),
+              title: Text("About"),
+            )
+          ],
+        ),
+      ),
       body: navBarIndex == 0 ? const Profile() : const LeaderBoard(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).primaryColorDark,
