@@ -1,8 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'utilities/response.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({Key? key}) : super(key: key);
+  Profile({Key? key}) : super(key: key);
+  static User user = User();
+  Response response = Response(users: [user]);
+
+  void _printResponse() {
+    print(response.status);
+    print(response.users[0].rating);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +39,13 @@ class Profile extends StatelessWidget {
             ),
           ),
         ),
-        child: const Text(
-          "Profile",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+        child: Column(
+          children: [
+            const Text(
+              "Profile",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+            ),
+          ],
         ),
       ),
     );

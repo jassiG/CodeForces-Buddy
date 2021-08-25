@@ -1,28 +1,10 @@
 class Response {
-  String name = "five";
-  List<User> users = [
-    User("lmao", "this", 5, "this", 5, "this", 5, "this", 5, "this", "this", 5,
-        5, "this")
-  ];
+  String status;
+  List<User> users;
+  Response({this.status = "NA", required this.users});
 }
 
 class User {
-  User(
-    this.lastName,
-    this.avatar,
-    this.contribution,
-    this.firstName,
-    this.friendOfCount,
-    this.handle,
-    this.lastOnlineTimeSeconds,
-    this.maxRank,
-    this.maxRating,
-    this.organization,
-    this.rank,
-    this.rating,
-    this.registrationTimeSeconds,
-    this.titlePhoto,
-  );
   String lastName;
   int lastOnlineTimeSeconds;
   int rating;
@@ -37,4 +19,21 @@ class User {
   int maxRating;
   int registrationTimeSeconds;
   String maxRank;
+
+  User({
+    this.lastName = "NA",
+    this.avatar = "NA",
+    this.contribution = 0,
+    this.firstName = "NA",
+    this.friendOfCount = 0,
+    this.handle = "NA",
+    this.lastOnlineTimeSeconds = 0,
+    this.maxRank = "nubie",
+    this.maxRating = 0,
+    this.organization = "NA",
+    this.rank = "NA",
+    this.rating = 0,
+    this.registrationTimeSeconds = 0,
+    this.titlePhoto = "noimage",
+  });
 }

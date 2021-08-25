@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: navBarIndex == 0 ? const Profile() : const LeaderBoard(),
+      body: navBarIndex == 0 ? Profile() : LeaderBoard(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).primaryColorDark,
         unselectedItemColor: Colors.white38,
