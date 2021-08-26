@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'profile.dart';
 import 'leaderboard.dart';
+import 'Drawer/setprofile.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -34,9 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () => Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Settings())),
             ),
-            const ListTile(
-              leading: Icon(Icons.person),
-              title: Text("Change Profile"),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text("Change Profile"),
+              onTap: () => Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => SetProfile())),
             ),
             const ListTile(
               leading: Icon(Icons.info),

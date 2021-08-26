@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Response {
   String status;
   List<User> users;
@@ -36,4 +38,21 @@ class User {
     this.registrationTimeSeconds = 0,
     this.titlePhoto = "noimage",
   });
+}
+
+Response generateDummyResponse(int length) {
+  return Response(
+    users: [
+      for (int i = 0; i < length; i++)
+        User(
+            rating: Random(DateTime.now().millisecondsSinceEpoch + i)
+                .nextInt(3500)),
+    ],
+  );
+}
+
+Response addDummyUser(Response response) {
+  response.users.add(User(
+      rating: Random(DateTime.now().millisecondsSinceEpoch).nextInt(3500)));
+  return response;
 }
