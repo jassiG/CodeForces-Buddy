@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cfbuddy/main.dart';
+import 'package:cfbuddy/utilities/config.dart';
 
 class Settings extends StatefulWidget {
   Settings({Key? key}) : super(key: key);
@@ -10,10 +11,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  List<String> _themes = ['Light', 'Dark', 'System']; // Option 2
-  String _selectedTheme = 'System'; // Option 2
-  final set = Settings();
-
+  bool themeValue = currentTheme.getDark();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,29 +22,20 @@ class _SettingsState extends State<Settings> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const Text("App Theme "),
-                DropdownButton(
-                  hint: const Text(
-                      'Please choose a Theme'), // Not necessary for Option 1
-                  value: _selectedTheme,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedTheme = newValue.toString();
-                      set.themeSettings = newValue.toString();
-                    });
-                  },
-                  items: _themes.map((theme) {
-                    return DropdownMenuItem(
-                      child: new Text(theme),
-                      value: theme,
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
+            ListTile(
+              leading: const Icon(Icons.wb_sunny),
+              title: const Text("Dark Theme", style: TextStyle(fontSize: 18)),
+              trailing: Switch(
+                value: themeValue,
+                onChanged: (value) {
+                  setState(() {
+                    themeValue = value;
+                  });
+                  currentTheme.setDarkViaBool(value);
+                  //print(value);
+                },
+              ),
+            )
           ],
         ),
       ),

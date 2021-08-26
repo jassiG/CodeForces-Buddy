@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: navBarIndex == 0 ? Profile() : LeaderBoard(),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColorDark,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         unselectedItemColor: Colors.white38,
         selectedItemColor: Colors.white,
         selectedIconTheme: const IconThemeData(size: 26),
