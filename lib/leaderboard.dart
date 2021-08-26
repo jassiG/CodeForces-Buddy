@@ -9,7 +9,8 @@ class LeaderBoard extends StatefulWidget {
 }
 
 class _LeaderBoardState extends State<LeaderBoard> {
-  Response response = generateDummyResponse(5);
+  MyResponse response = generateDummyResponse(5);
+
   @override
   void initState() {
     super.initState();
@@ -18,60 +19,66 @@ class _LeaderBoardState extends State<LeaderBoard> {
 
   @override
   Widget build(BuildContext context) {
+    final _media = MediaQuery.of(context);
+    final screenWidth = _media.size.width;
+    final screenHeight =
+        _media.size.height - _media.padding.top - _media.padding.bottom;
     return Stack(
       children: [
-        Container(
-          width: double.infinity,
-          alignment: Alignment.center,
-          padding: const EdgeInsets.only(top: 150), // Padding For Profile
-          color: Colors.white38,
+        SingleChildScrollView(
           child: Container(
             width: double.infinity,
-            height: double.infinity,
+            height: 1000,
             alignment: Alignment.center,
-            decoration: ShapeDecoration(
-              color: Theme.of(context).cardColor,
-              shadows: const [
-                BoxShadow(
-                    blurRadius: 15.0,
-                    offset: Offset(0, 0),
-                    color: Colors.black12,
-                    spreadRadius: 5.0)
-              ],
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0),
+            padding: const EdgeInsets.only(top: 150), // Padding For Profile
+            color: Colors.white38,
+            child: Container(
+              width: double.infinity,
+              alignment: Alignment.center,
+              decoration: ShapeDecoration(
+                color: Theme.of(context).cardColor,
+                shadows: const [
+                  BoxShadow(
+                      blurRadius: 15.0,
+                      offset: Offset(0, 0),
+                      color: Colors.black12,
+                      spreadRadius: 5.0)
+                ],
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40.0),
+                    topRight: Radius.circular(40.0),
+                  ),
                 ),
               ),
-            ),
-            child: Column(
-              children: [
-                const Divider(
-                  height: 20,
-                  color: Colors.transparent,
-                ),
-                const Text(
-                  "LeaderBoard",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-                ),
-                const Divider(
-                  height: 50,
-                  indent: 10,
-                  endIndent: 10,
-                ),
-                for (int i = 0; i < response.users.length; i++)
-                  ListTile(
-                    leading: const Icon(Icons.person),
-                    title: Text(response.users[i].handle),
-                    trailing: Text(response.users[i].rating.toString()),
-                    onLongPress: () {
-                      setState(() {
-                        response.users.removeAt(i);
-                      });
-                    },
-                  )
-              ],
+              child: Column(
+                children: [
+                  const Divider(
+                    height: 20,
+                    color: Colors.transparent,
+                  ),
+                  const Text(
+                    "LeaderBoard",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                  ),
+                  const Divider(
+                    height: 50,
+                    indent: 10,
+                    endIndent: 10,
+                  ),
+                  for (int i = 0; i < response.users.length; i++)
+                    ListTile(
+                      leading: const Icon(Icons.person),
+                      title: Text(response.users[i].handle),
+                      trailing: Text(response.users[i].rating.toString()),
+                      onLongPress: () {
+                        setState(() {
+                          response.users.removeAt(i);
+                        });
+                      },
+                    ),
+                ],
+              ),
             ),
           ),
         ),
@@ -86,6 +93,20 @@ class _LeaderBoardState extends State<LeaderBoard> {
               });
             },
             child: Icon(Icons.add),
+          ),
+        ),
+        Positioned(
+          left: 10,
+          bottom: 10,
+          child: FloatingActionButton(
+            onPressed: () async {
+              MyResponse fuckingFinally = await getMyResponse('jassigill');
+              setState(() {
+                response.users.add(fuckingFinally.users[0]);
+              });
+              print("Done");
+            },
+            child: const Icon(Icons.info),
           ),
         )
       ],
