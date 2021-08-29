@@ -11,4 +11,8 @@ class ProfileHive extends HiveObject {
   int rating;
 
   ProfileHive({required this.handle, required this.rating});
+  @override
+  toString() {
+    return handle;
+  }
 }

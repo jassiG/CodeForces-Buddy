@@ -1,3 +1,4 @@
+import 'package:cfbuddy/model/profilehive.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -10,7 +11,7 @@ class SetProfile extends StatefulWidget {
 
 class _SetProfileState extends State<SetProfile> {
   final myController = TextEditingController();
-  Box profileBox = Hive.box('ProfileBox');
+  Box profileBox = Hive.box<ProfileHive>('ProfileBox');
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -39,8 +40,9 @@ class _SetProfileState extends State<SetProfile> {
               ElevatedButton(
                   onPressed: () {
                     profileBox.clear();
-                    profileBox.add(myController.text);
-                    print(profileBox.getAt(0));
+                    profileBox
+                        .add(ProfileHive(handle: myController.text, rating: 0));
+                    print(profileBox.getAt(0).toString());
                   },
                   child: const Text("Get Profile")),
             ],
