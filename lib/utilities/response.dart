@@ -93,6 +93,10 @@ class User {
       city: json['city'] == null ? "" : json['city'] as String,
     );
   }
+  @override // useful for printing user objects
+  String toString() {
+    return "User: " + handle + ", Rating: " + rating.toString();
+  }
 }
 
 MyResponse generateDummyResponse(int length) {

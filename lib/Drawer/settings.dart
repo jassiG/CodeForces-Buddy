@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cfbuddy/main.dart';
 import 'package:cfbuddy/utilities/config.dart';
 
 class Settings extends StatefulWidget {

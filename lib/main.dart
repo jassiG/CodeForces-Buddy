@@ -1,9 +1,19 @@
 import 'package:cfbuddy/utilities/config.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'homescreen.dart';
+import 'model/handles.dart';
+import 'model/profilehive.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(ProfileHiveAdapter());
+  Hive.registerAdapter(HandlesAdapter());
+
+  await Hive.openBox<ProfileHive>('ProfileBox');
   runApp(MyApp());
 }
 
@@ -15,7 +25,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String themeS = "System";
   @override
   void initState() {
     super.initState();

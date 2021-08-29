@@ -19,16 +19,11 @@ class _LeaderBoardState extends State<LeaderBoard> {
 
   @override
   Widget build(BuildContext context) {
-    final _media = MediaQuery.of(context);
-    final screenWidth = _media.size.width;
-    final screenHeight =
-        _media.size.height - _media.padding.top - _media.padding.bottom;
     return Stack(
       children: [
         SingleChildScrollView(
           child: Container(
             width: double.infinity,
-            height: 1000,
             alignment: Alignment.center,
             padding: const EdgeInsets.only(top: 150), // Padding For Profile
             color: Colors.white38,
@@ -66,17 +61,23 @@ class _LeaderBoardState extends State<LeaderBoard> {
                     indent: 10,
                     endIndent: 10,
                   ),
-                  for (int i = 0; i < response.users.length; i++)
-                    ListTile(
-                      leading: const Icon(Icons.person),
-                      title: Text(response.users[i].handle),
-                      trailing: Text(response.users[i].rating.toString()),
-                      onLongPress: () {
-                        setState(() {
-                          response.users.removeAt(i);
-                        });
-                      },
-                    ),
+                  ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      for (int i = 0; i < response.users.length; i++)
+                        ListTile(
+                          leading: const Icon(Icons.person),
+                          title: Text(response.users[i].handle),
+                          trailing: Text(response.users[i].rating.toString()),
+                          onLongPress: () {
+                            setState(() {
+                              response.users.removeAt(i);
+                            });
+                          },
+                        ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -101,10 +102,10 @@ class _LeaderBoardState extends State<LeaderBoard> {
           child: FloatingActionButton(
             onPressed: () async {
               MyResponse fuckingFinally = await getMyResponse('jassigill');
+              response.users.add(fuckingFinally.users[0]);
               setState(() {
-                response.users.add(fuckingFinally.users[0]);
+                response.users.sort((a, b) => b.rating.compareTo(a.rating));
               });
-              print("Done");
             },
             child: const Icon(Icons.info),
           ),
