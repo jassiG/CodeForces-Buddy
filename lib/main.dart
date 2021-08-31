@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'This',
+      title: 'CF Buddy',
       theme: FlexColorScheme.light(scheme: FlexScheme.deepBlue).toTheme,
       darkTheme: FlexColorScheme.dark(scheme: FlexScheme.deepBlue).toTheme,
       themeMode: currentTheme.currentTheme(),

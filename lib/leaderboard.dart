@@ -19,10 +19,12 @@ class _LeaderBoardState extends State<LeaderBoard> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     return Stack(
       children: [
         SingleChildScrollView(
           child: Container(
+            height: screenSize.height - 150 + 10,
             width: double.infinity,
             alignment: Alignment.center,
             padding: const EdgeInsets.only(top: 150), // Padding For Profile
@@ -93,7 +95,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
                 response.users.sort((a, b) => b.rating.compareTo(a.rating));
               });
             },
-            child: Icon(Icons.add),
+            child: const Icon(Icons.add),
           ),
         ),
         Positioned(

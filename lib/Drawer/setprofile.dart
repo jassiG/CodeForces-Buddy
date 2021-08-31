@@ -1,6 +1,8 @@
 import 'package:cfbuddy/model/profilehive.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:cfbuddy/utilities/response.dart' as responses;
+import 'package:http/http.dart';
 
 class SetProfile extends StatefulWidget {
   const SetProfile({Key? key}) : super(key: key);
@@ -38,11 +40,36 @@ class _SetProfileState extends State<SetProfile> {
                 color: Colors.transparent,
               ),
               ElevatedButton(
-                  onPressed: () {
-                    profileBox.clear();
-                    profileBox
-                        .add(ProfileHive(handle: myController.text, rating: 0));
-                    print(profileBox.getAt(0).toString());
+                  onPressed: () async {
+                    try {
+                      responses.MyResponse tempResponse =
+                          await responses.getMyResponse(myController.text);
+                      if (tempResponse.status != 'OK') {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("Sorry, No Such User Found"),
+                          duration: Duration(milliseconds: 1000),
+                        ));
+                      } else {
+                        profileBox = updateProfileFromHandle(
+                          profileBox,
+                          tempResponse.users[0].handle,
+                          tempResponse.users[0].rating,
+                          tempResponse.users[0].rank,
+                          tempResponse.users[0].titlePhoto,
+                        );
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("User has been added successfully"),
+                          duration: const Duration(milliseconds: 1000),
+                        ));
+                      }
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("User Not Found"),
+                        duration: Duration(milliseconds: 1000),
+                      ));
+                    }
                   },
                   child: const Text("Get Profile")),
             ],

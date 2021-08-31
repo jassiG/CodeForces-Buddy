@@ -1,6 +1,8 @@
 import 'package:cfbuddy/Drawer/settings.dart';
+import 'package:cfbuddy/model/profilehive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'profile.dart';
 import 'leaderboard.dart';
 import 'Drawer/setprofile.dart';
@@ -15,6 +17,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int navBarIndex = 0;
   //void _doNothing() {}
+  Box profileBox = Hive.box<ProfileHive>('ProfileBox');
+
+  ProfileHive myProfile =
+      ProfileHive(handle: 'NA', rating: 0, rank: 'noob', titlePhoto: "NA");
+
+  @override
+  void initState() {
+    myProfile = profileBox.getAt(0);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: Drawer(
         child: ListView(
           children: [
-            const DrawerHeader(child: FlutterLogo()),
+            DrawerHeader(
+              child: myProfile.titlePhoto == "NA"
+                  ? Image.asset('assets/noimagefound.png')
+                  : Image.network(
+                      myProfile.titlePhoto,
+                      fit: BoxFit.,
+                    ),
+            ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text("Settings"),
@@ -58,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: (int val) {
           setState(() {
             navBarIndex = val;
+            myProfile = profileBox.getAt(0);
           });
         },
         currentIndex: navBarIndex,

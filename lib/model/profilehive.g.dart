@@ -19,17 +19,23 @@ class ProfileHiveAdapter extends TypeAdapter<ProfileHive> {
     return ProfileHive(
       handle: fields[0] as String,
       rating: fields[1] as int,
+      rank: fields[2] as String,
+      titlePhoto: fields[3] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, ProfileHive obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.handle)
       ..writeByte(1)
-      ..write(obj.rating);
+      ..write(obj.rating)
+      ..writeByte(2)
+      ..write(obj.rank)
+      ..writeByte(3)
+      ..write(obj.titlePhoto);
   }
 
   @override

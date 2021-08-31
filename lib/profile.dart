@@ -1,15 +1,29 @@
+import 'package:cfbuddy/model/profilehive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'utilities/response.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
   static User user = User();
-  MyResponse response = MyResponse(users: [user]);
 
-  void _printResponse() {
-    print(response.status);
-    print(response.users[0].rating);
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  MyResponse response = MyResponse(users: [Profile.user]);
+
+  Box profileBox = Hive.box<ProfileHive>('ProfileBox');
+
+  ProfileHive myProfile =
+      ProfileHive(handle: 'NA', rating: 0, rank: 'noob', titlePhoto: "NA");
+
+  @override
+  void initState() {
+    myProfile = profileBox.getAt(0);
+    super.initState();
   }
 
   @override
@@ -47,9 +61,9 @@ class Profile extends StatelessWidget {
                   const Divider(height: 150 / 2, color: Colors.transparent),
                   Container(
                     alignment: Alignment.center,
-                    child: const Text(
-                      "Profile",
-                      style: TextStyle(
+                    child: Text(
+                      myProfile.handle,
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
                       ),
@@ -70,11 +84,11 @@ class Profile extends StatelessWidget {
             margin: EdgeInsets.only(
                 left: _screenWidth * 0.5 - 150 / 2, top: 150 - 150 / 2),
             padding: const EdgeInsets.all(5.0),
-            child: Container(
-              child: const CircleAvatar(
-                radius: 150 / 2,
-                child: FlutterLogo(),
-              ),
+            child: CircleAvatar(
+              radius: 150 / 2,
+              foregroundImage: myProfile.titlePhoto == "NA"
+                  ? Image.asset('assets/noimagefound.png').image
+                  : Image.network(myProfile.titlePhoto).image,
             ),
           ),
         ],
