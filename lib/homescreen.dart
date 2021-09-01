@@ -24,7 +24,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    myProfile = profileBox.getAt(0);
+    try {
+      myProfile = profileBox.getAt(0);
+    } catch (e) {
+      myProfile = myProfile;
+    }
     super.initState();
   }
 
@@ -57,8 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               leading: const Icon(Icons.person),
               title: const Text("Change Profile"),
-              onTap: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => const SetProfile())),
+              onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const SetProfile())),
             ),
             const ListTile(
               leading: Icon(Icons.info),
@@ -77,7 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: (int val) {
           setState(() {
             navBarIndex = val;
-            myProfile = profileBox.getAt(0);
+            try {
+              myProfile = profileBox.getAt(0);
+            } catch (e) {}
           });
         },
         currentIndex: navBarIndex,

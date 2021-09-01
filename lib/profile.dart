@@ -22,7 +22,11 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    myProfile = profileBox.getAt(0);
+    try {
+      myProfile = profileBox.getAt(0);
+    } catch (e) {
+      myProfile = myProfile;
+    }
     super.initState();
   }
 
