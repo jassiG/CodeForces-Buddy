@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? Image.asset('assets/noimagefound.png')
                   : Image.network(
                       myProfile.titlePhoto,
-                      fit: BoxFit.,
+                      fit: BoxFit.fitWidth,
                     ),
             ),
             ListTile(
@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
               leading: const Icon(Icons.person),
               title: const Text("Change Profile"),
               onTap: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => SetProfile())),
+                  .push(MaterialPageRoute(builder: (context) => const SetProfile())),
             ),
             const ListTile(
               leading: Icon(Icons.info),
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: navBarIndex == 0 ? Profile() : LeaderBoard(),
+      body: navBarIndex == 0 ? Profile() : const LeaderBoard(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         unselectedItemColor: Colors.white38,
