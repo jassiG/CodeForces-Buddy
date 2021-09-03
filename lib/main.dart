@@ -42,6 +42,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: FlexColorScheme.dark(scheme: FlexScheme.deepBlue).toTheme,
       themeMode: currentTheme.currentTheme(),
       home: const HomeScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
