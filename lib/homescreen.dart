@@ -1,13 +1,10 @@
-import 'dart:ui';
-
-import 'package:cfbuddy/Drawer/settings.dart';
+import 'package:cfbuddy/Drawer/customdrawer.dart';
 import 'package:cfbuddy/model/profilehive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'profile.dart';
 import 'leaderboard.dart';
-import 'Drawer/setprofile.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -44,47 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ? const Text("Profile")
               : const Text("LeaderBoard"),
         ),
-        drawer: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.grey.shade200.withOpacity(0.5),
-            ),
-            child: Drawer(
-              elevation: 5.0,
-              child: ListView(
-                children: [
-                  DrawerHeader(
-                    margin: EdgeInsets.all(0),
-                    padding: EdgeInsets.all(0),
-                    child: myProfile.titlePhoto == "NA"
-                        ? Image.asset('assets/noimagefound.png')
-                        : Image.network(
-                            myProfile.titlePhoto,
-                            fit: BoxFit.fitWidth,
-                          ),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.settings),
-                    title: const Text("Settings"),
-                    onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Settings())),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.person),
-                    title: const Text("Change Profile"),
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SetProfile())),
-                  ),
-                  const ListTile(
-                    leading: Icon(Icons.info),
-                    title: Text("About"),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
+        drawer: CustomDrawer(myProfile: myProfile),
         body: navBarIndex == 0 ? Profile() : const LeaderBoard(),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
