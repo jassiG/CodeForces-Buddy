@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //double _wd = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -41,8 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ? const Text("Profile")
               : const Text("LeaderBoard"),
         ),
+        //Frosted glass Custom Drawer, located in Drawer Folder
         drawer: CustomDrawer(myProfile: myProfile),
+
         body: navBarIndex == 0 ? Profile() : const LeaderBoard(),
+
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           unselectedItemColor: Colors.white38,
