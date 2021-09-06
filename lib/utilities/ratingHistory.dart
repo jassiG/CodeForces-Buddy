@@ -18,14 +18,14 @@ class RatingHistory {
   }
 }
 
-Future<RatingHistory> getMyResponse(String userhandle) async {
+Future<RatingHistory> getMyRatingHistory(String userhandle) async {
   var url =
       Uri.parse('https://codeforces.com/api/user.rating?handle=' + userhandle);
   var response = await http.get(url);
-  return parseMyResponse(response.body);
+  return parseMyRatingHistory(response.body);
 }
 
-RatingHistory parseMyResponse(String responseBody) {
+RatingHistory parseMyRatingHistory(String responseBody) {
   final parsed = jsonDecode(responseBody);
   //print(MyResponse.fromJson(parsed));
   return RatingHistory.fromJson(parsed);
