@@ -24,8 +24,8 @@ class CustomDrawer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               DrawerHeader(
-                margin: EdgeInsets.all(0),
-                padding: EdgeInsets.all(0),
+                margin: const EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
                 child: myProfile.titlePhoto == "NA"
                     ? Image.asset('assets/noimagefound.png')
                     : Image.network(
@@ -84,7 +84,7 @@ class CustomDrawer extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 1,
                 indent: 20,
                 endIndent: 20,
@@ -92,11 +92,11 @@ class CustomDrawer extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Text("Made With ❤ By JassiG"),
                 ],
               ),
-              Divider(
+              const Divider(
                 color: Colors.transparent,
               ),
             ],

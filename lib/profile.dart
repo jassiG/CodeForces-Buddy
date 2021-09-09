@@ -1,8 +1,6 @@
 import 'package:cfbuddy/model/profilehive.dart';
-import 'package:cfbuddy/utilities/ratingHistory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'utilities/response.dart';
 
 class Profile extends StatefulWidget {
@@ -17,14 +15,10 @@ class Profile extends StatefulWidget {
 
   @override
   State<Profile> createState() =>
-      _ProfileState(ratingList: this.ratingList, myProfile: this.myProfile);
+      _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  ProfileHive myProfile =
-      ProfileHive(handle: 'NA', rating: 0, rank: 'noob', titlePhoto: "NA");
-  List<int> ratingList;
-  _ProfileState({required this.ratingList, required this.myProfile});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +31,7 @@ class _ProfileState extends State<Profile> {
           color: Colors.grey.shade600,
         ),
         SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Stack(
             children: [
               Container(
@@ -70,7 +64,7 @@ class _ProfileState extends State<Profile> {
                       Container(
                         alignment: Alignment.center,
                         child: Text(
-                          myProfile.handle,
+                          widget.myProfile.handle,
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
@@ -83,8 +77,8 @@ class _ProfileState extends State<Profile> {
                         endIndent: 10,
                         color: Colors.transparent,
                       ),
-                      Text("Rating History: \n"),
-                      for (int rating in ratingList)
+                      const Text("Rating History: \n"),
+                      for (int rating in widget.ratingList)
                         Text(rating.toString() + '\n'),
                     ],
                   ),
@@ -98,9 +92,9 @@ class _ProfileState extends State<Profile> {
                 padding: const EdgeInsets.all(5.0),
                 child: CircleAvatar(
                   radius: 150 / 2,
-                  foregroundImage: myProfile.titlePhoto == "NA"
+                  foregroundImage: widget.myProfile.titlePhoto == "NA"
                       ? Image.asset('assets/noimagefound.png').image
-                      : Image.network(myProfile.titlePhoto).image,
+                      : Image.network(widget.myProfile.titlePhoto).image,
                 ),
               ),
             ],

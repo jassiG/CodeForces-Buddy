@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cfbuddy/Drawer/customdrawer.dart';
 import 'package:cfbuddy/model/profilehive.dart';
 import 'package:cfbuddy/utilities/ratingHistory.dart';
@@ -10,53 +8,36 @@ import 'profile.dart';
 import 'leaderboard.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  Function callBack;
+  RatingHistory myRatings;
+  ProfileHive myProfile;
+  List<int> ratingList;
+  Box profileBox;
+  HomeScreen({
+    Key? key,
+    required this.myRatings,
+    required this.myProfile,
+    required this.ratingList,
+    required this.profileBox,
+    required this.callBack,
+  }) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  RatingHistory myRatings = RatingHistory(status: 'OK', ratings: [0, 0]);
-  List<int> ratingList = [0, 0];
-
   int navBarIndex = 0;
-
-  Box profileBox = Hive.box<ProfileHive>('ProfileBox');
-  ProfileHive myProfile =
-      ProfileHive(handle: 'NA', rating: 0, rank: 'noob', titlePhoto: "NA");
-
-  bool drawerState = false;
-
   @override
   void initState() {
-    try {
-      myProfile = profileBox.getAt(0);
-      setState(() {});
-      print("profile after initState: " + myProfile.handle);
-      sleep(Duration(milliseconds: 1000));
-    } catch (e) {
-      myProfile = myProfile;
-    }
-    try {
-      //sleep(Duration(milliseconds: 1000));
-      _getMyRatingHistory();
-      print("Get rating done!");
-    } catch (e) {
-      myRatings = myRatings;
-    }
-    ratingList = myRatings.ratings;
-    print(ratingList);
+    _getMyRatingHistory();
     super.initState();
   }
 
   _getMyRatingHistory() async {
-    myRatings = await getMyRatingHistory(myProfile.handle);
+    widget.myRatings = await getMyRatingHistory(widget.myProfile.handle);
     setState(() {});
-    ratingList = myRatings.ratings;
-    //print(myRatings.ratings);
-    //setState(() {});
-    //print("setState in getRating");
+    widget.ratingList = widget.myRatings.ratings;
   }
 
   @override
@@ -69,23 +50,24 @@ class _HomeScreenState extends State<HomeScreen> {
               : const Text("LeaderBoard"),
         ),
         //Frosted glass Custom Drawer, located in Drawer Folder
-        drawer: CustomDrawer(myProfile: myProfile),
+        drawer: CustomDrawer(myProfile: widget.myProfile),
         onDrawerChanged: (drawerState) {
           if (!drawerState) {
-            setState(() {
-              try {
-                myProfile = profileBox.getAt(0);
-                _getMyRatingHistory();
-              } catch (e) {}
-            });
+            // setState(() {
+            //   try {
+            //     widget.myProfile = widget.profileBox.getAt(0);
+            //     _getMyRatingHistory();
+            //   } catch (_) {}
+            // });
+            widget.callBack();
           }
           //drawerState = !drawerState;
-          print(drawerState);
+          //print(drawerState);
         },
         body: navBarIndex == 0
             ? Profile(
-                ratingList: ratingList,
-                myProfile: myProfile,
+                ratingList: widget.ratingList,
+                myProfile: widget.myProfile,
               )
             : const LeaderBoard(),
 
@@ -99,10 +81,10 @@ class _HomeScreenState extends State<HomeScreen> {
             setState(() {
               navBarIndex = val;
               try {
-                myProfile = profileBox.getAt(0);
+                widget.myProfile = widget.profileBox.getAt(0);
                 _getMyRatingHistory();
-              } catch (e) {}
-              print("Profile after setState: " + myProfile.handle);
+              } catch (_) {}
+              //print("Profile after setState: " + myProfile.handle);
             });
           },
           currentIndex: navBarIndex,

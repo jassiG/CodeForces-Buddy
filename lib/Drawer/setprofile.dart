@@ -2,7 +2,7 @@ import 'package:cfbuddy/model/profilehive.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:cfbuddy/utilities/response.dart' as responses;
-import 'package:http/http.dart';
+//import 'package:http/http.dart';
 
 class SetProfile extends StatefulWidget {
   const SetProfile({Key? key}) : super(key: key);
@@ -61,10 +61,10 @@ class _SetProfileState extends State<SetProfile> {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(
                           content: Text("User has been added successfully"),
-                          duration: const Duration(milliseconds: 1000),
+                          duration: Duration(milliseconds: 1000),
                         ));
                       }
-                    } catch (e) {
+                    } catch (_) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text("User Not Found"),
                         duration: Duration(milliseconds: 1000),
