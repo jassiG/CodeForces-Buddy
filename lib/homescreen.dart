@@ -1,6 +1,6 @@
 import 'package:cfbuddy/Drawer/customdrawer.dart';
 import 'package:cfbuddy/model/profilehive.dart';
-import 'package:cfbuddy/utilities/ratingHistory.dart';
+import 'package:cfbuddy/utilities/rating_history.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -11,13 +11,13 @@ class HomeScreen extends StatefulWidget {
   Function callBack;
   RatingHistory myRatings;
   ProfileHive myProfile;
-  List<int> ratingList;
+  //List<int> ratingList;
   Box profileBox;
   HomeScreen({
     Key? key,
     required this.myRatings,
     required this.myProfile,
-    required this.ratingList,
+    //required this.ratingList,
     required this.profileBox,
     required this.callBack,
   }) : super(key: key);
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   _getMyRatingHistory() async {
     widget.myRatings = await getMyRatingHistory(widget.myProfile.handle);
     setState(() {});
-    widget.ratingList = widget.myRatings.ratings;
+    //widget.ratingList = widget.myRatings.ratings;
   }
 
   @override
@@ -53,12 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
         drawer: CustomDrawer(myProfile: widget.myProfile),
         onDrawerChanged: (drawerState) {
           if (!drawerState) {
-            // setState(() {
-            //   try {
-            //     widget.myProfile = widget.profileBox.getAt(0);
-            //     _getMyRatingHistory();
-            //   } catch (_) {}
-            // });
             widget.callBack();
           }
           //drawerState = !drawerState;
@@ -66,7 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         body: navBarIndex == 0
             ? Profile(
-                ratingList: widget.ratingList,
+                //ratingList: widget.ratingList,
+                ratingHistory: widget.myRatings,
                 myProfile: widget.myProfile,
               )
             : const LeaderBoard(),

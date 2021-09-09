@@ -1,5 +1,5 @@
 import 'package:cfbuddy/utilities/config.dart';
-import 'package:cfbuddy/utilities/ratingHistory.dart';
+import 'package:cfbuddy/utilities/rating_history.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -26,7 +26,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  RatingHistory myRatings = RatingHistory(status: 'OK', ratings: [0, 0]);
+  RatingHistory myRatings =
+      RatingHistory(status: 'OK', ratings: [0, 0], updateTimes: [0, 0]);
   List<int> ratingList = [0, 0];
 
   Box profileBox = Hive.box<ProfileHive>('ProfileBox');
@@ -84,7 +85,7 @@ class _MyAppState extends State<MyApp> {
       home: HomeScreen(
         myProfile: myProfile,
         profileBox: profileBox,
-        ratingList: ratingList,
+        //ratingList: ratingList,
         myRatings: myRatings,
         callBack: _callBack,
       ),

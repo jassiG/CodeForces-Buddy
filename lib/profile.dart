@@ -1,25 +1,28 @@
 import 'package:cfbuddy/model/profilehive.dart';
+import 'package:cfbuddy/utilities/rating_history.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'utilities/response.dart';
 
 class Profile extends StatefulWidget {
-  List<int> ratingList;
+  //List<int> ratingList;
+  RatingHistory ratingHistory;
   ProfileHive myProfile;
   Profile({
     Key? key,
-    required this.ratingList,
+    //required this.ratingList,
+    required this.ratingHistory,
     required this.myProfile,
   }) : super(key: key);
   static User user = User();
 
   @override
-  State<Profile> createState() =>
-      _ProfileState();
+  State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -78,8 +81,17 @@ class _ProfileState extends State<Profile> {
                         color: Colors.transparent,
                       ),
                       const Text("Rating History: \n"),
-                      for (int rating in widget.ratingList)
-                        Text(rating.toString() + '\n'),
+                      SfCartesianChart(
+                        series: [
+                          LineSeries(
+                              dataSource: widget.ratingHistory.ratings,
+                              xValueMapper: (datum, index) =>
+                                  widget.ratingHistory.updateTimes[index],
+                              yValueMapper: (datum, index) =>
+                                  widget.ratingHistory.ratings[index])
+                        ],
+                        margin: const EdgeInsets.all(10),
+                      ),
                     ],
                   ),
                 ),
