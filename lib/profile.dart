@@ -82,11 +82,14 @@ class _ProfileState extends State<Profile> {
                       ),
                       const Text("Rating History: \n"),
                       SfCartesianChart(
+                        primaryXAxis: DateTimeAxis(),
                         series: [
                           LineSeries(
                               dataSource: widget.ratingHistory.ratings,
                               xValueMapper: (datum, index) =>
-                                  widget.ratingHistory.updateTimes[index],
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      widget.ratingHistory.updateTimes[index] *
+                                          1000),
                               yValueMapper: (datum, index) =>
                                   widget.ratingHistory.ratings[index])
                         ],
