@@ -5,6 +5,7 @@ import 'package:cfbuddy/utilities/rating_history.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'utilities/response.dart';
 
@@ -23,8 +24,17 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  double smoothness = 0.0;
+  int currentRating = 0;
+  int prevRating = 0;
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      currentRating =
+          widget.ratingHistory.ratings[widget.ratingHistory.ratings.length - 1];
+      prevRating =
+          widget.ratingHistory.ratings[widget.ratingHistory.ratings.length - 2];
+    });
     final Size screenSize = MediaQuery.of(context).size;
     return Stack(
       children: [
@@ -34,28 +44,62 @@ class _ProfileState extends State<Profile> {
             children: [
               Container(
                 width: double.infinity,
+                height: 100 + 40,
+                child: widget.myProfile.titlePhoto == "NA"
+                    ? Image.asset('assets/noimagefound.png')
+                    : Image.network(
+                        widget.myProfile.titlePhoto,
+                        alignment: Alignment.center,
+                        fit: BoxFit.fitWidth,
+                      ),
+              ),
+              BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 4.0,
+                  sigmaY: 4.0,
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      width: 100,
+                      height: 100,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 100,
+                      decoration: ShapeDecoration(
+                        color: Theme.of(context).backgroundColor,
+                        // color: Colors.red,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(40.0),
+                            topRight: Radius.circular(40.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
                 constraints: BoxConstraints(
                   minHeight: screenSize.height - 150 + 10,
                 ),
                 //height: screenSize.height - 150 + 10,
                 padding: const EdgeInsets.only(top: 100), // Padding For Profile
-                color: Colors.red,
                 child: Container(
                   width: double.infinity,
                   decoration: ShapeDecoration(
-                    color: Theme.of(context).cardColor,
-                    shadows: [
-                      const BoxShadow(
-                          blurRadius: 20.0,
-                          offset: Offset(0, -8),
-                          color: Colors.black12,
-                          spreadRadius: 5.0),
-                      BoxShadow(
-                          blurRadius: 8.0,
-                          offset: const Offset(0, 10),
-                          color: Theme.of(context).backgroundColor,
-                          spreadRadius: 5.0),
-                    ],
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.white.withOpacity(0.07),
+                        Colors.grey.shade800.withOpacity(0.09),
+                        Theme.of(context).backgroundColor.withOpacity(0.0),
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(40.0),
@@ -98,52 +142,140 @@ class _ProfileState extends State<Profile> {
       children: [
         Container(
           alignment: Alignment.center,
-          child: Text(
-            widget.myProfile.handle,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-            ),
+          child: Column(
+            children: [
+              Text(
+                widget.myProfile.handle,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.myProfile.rating.toString(),
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  currentRating >= prevRating
+                      ? Row(
+                          //crossAxisAlignment: CrossAxisAlignment.baseline,
+                          //textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            const Icon(
+                              Icons.arrow_upward,
+                              size: 13,
+                              color: Colors.green,
+                            ),
+                            Text(
+                              (currentRating - prevRating).toString(),
+                              style: const TextStyle(
+                                color: Colors.green,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            const Icon(
+                              Icons.arrow_downward,
+                              size: 13,
+                              color: Colors.red,
+                            ),
+                            Text(
+                              (prevRating - currentRating).toString(),
+                              style: const TextStyle(
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        )
+                ],
+              ),
+            ],
           ),
         ),
         const Divider(
-          height: 50,
-          indent: 10,
-          endIndent: 10,
-          color: Colors.transparent,
+          height: 10,
+          indent: 20,
+          endIndent: 20,
+          //color: Colors.transparent,
         ),
         //const Text("Rating History: \n"),
         Padding(
           padding: const EdgeInsets.all(4),
-          child: infoCard(),
+          child: infoCard(ratingChartWidget()),
         )
       ],
     );
   }
 
-  Widget infoCard() {
+  Widget infoCard(Widget child) {
     return Card(
-      elevation: 5.0,
+      elevation: 4.0,
       color: Theme.of(context).canvasColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      child: ratingChartWidget(),
+      child: child,
     );
   }
 
   Widget ratingChartWidget() {
-    return SfCartesianChart(
-      title: ChartTitle(text: "Rating History"),
-      primaryXAxis: DateTimeAxis(),
-      series: [
-        LineSeries(
-            dataSource: widget.ratingHistory.ratings,
-            xValueMapper: (datum, index) => DateTime.fromMillisecondsSinceEpoch(
-                widget.ratingHistory.updateTimes[index] * 1000),
-            yValueMapper: (datum, index) => widget.ratingHistory.ratings[index])
+    double currentRating = 1.0 * widget.ratingHistory.ratings[0];
+    return Column(
+      children: [
+        SfCartesianChart(
+          title: ChartTitle(text: "Rating History"),
+          primaryXAxis: DateTimeAxis(),
+          zoomPanBehavior: ZoomPanBehavior(
+            enablePanning: true,
+            enablePinching: true,
+            maximumZoomLevel: 5.0,
+          ),
+          series: [
+            LineSeries(
+                dataSource: widget.ratingHistory.ratings,
+                xValueMapper: (datum, index) =>
+                    DateTime.fromMillisecondsSinceEpoch(
+                        widget.ratingHistory.updateTimes[index] * 1000),
+                yValueMapper: (datum, index) {
+                  if (index == 0) {
+                    return widget.ratingHistory.ratings[index];
+                  } else {
+                    currentRating = (smoothness) * currentRating +
+                        (1.0 - smoothness) *
+                            widget.ratingHistory.ratings[index];
+                    return currentRating;
+                  }
+                })
+          ],
+          margin: const EdgeInsets.all(10),
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("Smoothness"),
+            Slider(
+              value: smoothness,
+              onChanged: (value) {
+                smoothness = value;
+                //_update();
+                setState(() {});
+              },
+              min: 0.0,
+              max: 0.90,
+              //label: ((smoothness * 10).round()).toString(),
+              divisions: 3,
+            ),
+          ],
+        ),
       ],
-      margin: const EdgeInsets.all(10),
     );
   }
 }

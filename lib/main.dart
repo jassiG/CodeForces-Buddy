@@ -79,8 +79,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'CF Buddy',
-      theme: FlexColorScheme.light(scheme: FlexScheme.deepBlue).toTheme,
-      darkTheme: FlexColorScheme.dark(scheme: FlexScheme.deepBlue).toTheme,
+      theme: FlexColorScheme.light(scheme: FlexScheme.ebonyClay).toTheme,
+      darkTheme: FlexColorScheme.dark(scheme: FlexScheme.ebonyClay).toTheme,
       themeMode: currentTheme.currentTheme(),
       home: HomeScreen(
         myProfile: myProfile,

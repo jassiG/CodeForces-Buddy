@@ -16,7 +16,7 @@ class CustomDrawer extends StatelessWidget {
       filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
       child: Theme(
         data: Theme.of(context).copyWith(
-          canvasColor: Colors.white.withOpacity(0.4),
+          canvasColor: Colors.grey.withOpacity(0.4),
         ),
         child: Drawer(
           elevation: 5.0,
