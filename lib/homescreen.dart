@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
   Function callBack;
   RatingHistory myRatings;
   ProfileHive myProfile;
+  Box friendProfilesBox;
   //List<int> ratingList;
   Box profileBox;
   HomeScreen({
@@ -20,6 +21,7 @@ class HomeScreen extends StatefulWidget {
     //required this.ratingList,
     required this.profileBox,
     required this.callBack,
+    required this.friendProfilesBox,
   }) : super(key: key);
 
   @override
@@ -64,7 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ratingHistory: widget.myRatings,
                 myProfile: widget.myProfile,
               )
-            : const LeaderBoard(),
+            : LeaderBoard(
+              friendProfilesBox: widget.friendProfilesBox,
+            ),
 
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,

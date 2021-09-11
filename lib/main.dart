@@ -31,6 +31,7 @@ class _MyAppState extends State<MyApp> {
   List<int> ratingList = [0, 0];
 
   Box profileBox = Hive.box<ProfileHive>('ProfileBox');
+  Box friendProfilesBox = Hive.box<ProfileHive>('FriendsProfilesBox');
   ProfileHive myProfile =
       ProfileHive(handle: 'NA', rating: 0, rank: 'noob', titlePhoto: "NA");
 
@@ -88,6 +89,7 @@ class _MyAppState extends State<MyApp> {
         //ratingList: ratingList,
         myRatings: myRatings,
         callBack: _callBack,
+        friendProfilesBox: friendProfilesBox,
       ),
       debugShowCheckedModeBanner: false,
     );
