@@ -86,7 +86,6 @@ class _ProfileState extends State<Profile> {
                 constraints: BoxConstraints(
                   minHeight: screenSize.height - 150 + 10,
                 ),
-                //height: screenSize.height - 150 + 10,
                 padding: const EdgeInsets.only(top: 100), // Padding For Profile
                 child: Container(
                   width: double.infinity,
@@ -163,8 +162,6 @@ class _ProfileState extends State<Profile> {
                   ),
                   currentRating >= prevRating
                       ? Row(
-                          //crossAxisAlignment: CrossAxisAlignment.baseline,
-                          //textBaseline: TextBaseline.alphabetic,
                           children: [
                             const Icon(
                               Icons.arrow_upward,
@@ -203,9 +200,7 @@ class _ProfileState extends State<Profile> {
           height: 10,
           indent: 20,
           endIndent: 20,
-          //color: Colors.transparent,
         ),
-        //const Text("Rating History: \n"),
         Padding(
           padding: const EdgeInsets.all(4),
           child: infoCard(ratingChartWidget()),
@@ -270,7 +265,6 @@ class _ProfileState extends State<Profile> {
               },
               min: 0.0,
               max: 0.90,
-              //label: ((smoothness * 10).round()).toString(),
               divisions: 3,
             ),
           ],

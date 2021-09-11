@@ -60,7 +60,6 @@ class _LeaderBoardState extends State<LeaderBoard> {
                 width: double.infinity,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(top: 100), // Padding For Profile
-                //color: Theme.of(context).backgroundColor,
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -68,7 +67,6 @@ class _LeaderBoardState extends State<LeaderBoard> {
                     gradient: LinearGradient(
                       colors: [
                         Colors.white.withOpacity(0.07),
-                        //Colors.grey.shade800.withOpacity(0.09),
                         Theme.of(context).backgroundColor.withOpacity(0.0),
                       ],
                       begin: Alignment.topCenter,
