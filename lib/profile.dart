@@ -155,7 +155,7 @@ class _ProfileState extends State<Profile> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.myProfile.rating.toString(),
+                    widget.myProfile.rating.toString() + " ",
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
