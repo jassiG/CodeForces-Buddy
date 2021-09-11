@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'utilities/response.dart';
 
 class LeaderBoard extends StatefulWidget {
@@ -10,6 +11,7 @@ class LeaderBoard extends StatefulWidget {
 
 class _LeaderBoardState extends State<LeaderBoard> {
   MyResponse response = generateDummyResponse(5);
+  final myController = TextEditingController();
 
   @override
   void initState() {
@@ -23,11 +25,12 @@ class _LeaderBoardState extends State<LeaderBoard> {
     return Stack(
       children: [
         SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Container(
             height: screenSize.height - 150 + 10,
             width: double.infinity,
             alignment: Alignment.center,
-            padding: const EdgeInsets.only(top: 150), // Padding For Profile
+            padding: const EdgeInsets.only(top: 100), // Padding For Profile
             color: Colors.white38,
             child: Container(
               width: double.infinity,
@@ -68,18 +71,26 @@ class _LeaderBoardState extends State<LeaderBoard> {
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
                       for (int i = 0; i < response.users.length; i++)
-                        ListTile(
-                          leading: const Icon(Icons.person),
-                          title: Text(response.users[i].handle),
-                          trailing: Text(response.users[i].rating.toString()),
-                          onLongPress: () {
-                            setState(() {
-                              response.users.removeAt(i);
-                            });
-                          },
+                        Slidable(
+                          actionPane: const SlidableDrawerActionPane(),
+                          child: ListTile(
+                            leading: const Icon(Icons.person),
+                            title: Text(response.users[i].handle),
+                            trailing: Text(response.users[i].rating.toString()),
+                          ),
+                          actions: <Widget>[
+                            IconSlideAction(
+                              caption: 'Delete',
+                              color: Colors.red,
+                              icon: Icons.delete,
+                              onTap: () => setState(() {
+                                response.users.removeAt(i);
+                              }),
+                            ),
+                          ],
                         ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

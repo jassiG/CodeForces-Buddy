@@ -13,7 +13,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+      filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
       child: Theme(
         data: Theme.of(context).copyWith(
           canvasColor: Colors.white.withOpacity(0.4),

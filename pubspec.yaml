@@ -36,6 +36,7 @@ dependencies:
   hive: any
   hive_flutter: any
   syncfusion_flutter_charts: ^19.2.60
+  flutter_slidable:
 
 dev_dependencies:
   flutter_test:
