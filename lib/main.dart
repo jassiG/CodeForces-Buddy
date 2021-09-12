@@ -15,6 +15,7 @@ void main() async {
   Hive.registerAdapter(HandlesAdapter());
 
   await Hive.openBox<ProfileHive>('ProfileBox');
+  await Hive.openBox<ProfileHive>('FriendsProfilesBox');
   runApp(MyApp());
 }
 

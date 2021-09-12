@@ -23,15 +23,7 @@ class ProfileHive extends HiveObject {
       required this.titlePhoto});
   @override
   toString() {
-    return "handle: " +
-        handle +
-        "\n" +
-        "rank: " +
-        rank +
-        "\n" +
-        "rating: " +
-        rating.toString() +
-        "\n";
+    return rating.toString();
   }
 }
 
@@ -51,5 +43,21 @@ Box updateProfileFromHandle(Box currentBox, String newHandle, int newRating,
       rating: newRating,
       rank: newRank,
       titlePhoto: newTitlePhoto));
+  return currentBox;
+}
+
+Box updateFriendProfileFromHandle(Box currentBox, String newHandle,
+    int newRating, String newRank, String newTitlePhoto) {
+  ProfileHive newProfile = ProfileHive(
+    handle: newHandle,
+    rating: newRating,
+    rank: newRank,
+    titlePhoto: newTitlePhoto,
+  );
+  if (currentBox.values.any((element) =>
+      element.toString() == newProfile.toString() ? true : false)) {
+    return currentBox;
+  }
+  currentBox.add(newProfile);
   return currentBox;
 }

@@ -36,69 +36,38 @@ class _ProfileState extends State<Profile> {
           widget.ratingHistory.ratings[widget.ratingHistory.ratings.length - 2];
     });
     final Size screenSize = MediaQuery.of(context).size;
-    return Stack(
-      children: [
-        SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Stack(
-            children: [
-              Container(
-                width: double.infinity,
-                height: 100 + 40,
-                child: widget.myProfile.titlePhoto == "NA"
-                    ? Image.asset('assets/noimagefound.png')
-                    : Image.network(
-                        widget.myProfile.titlePhoto,
-                        alignment: Alignment.center,
-                        fit: BoxFit.fitWidth,
-                      ),
-              ),
-              BackdropFilter(
-                filter: ImageFilter.blur(
-                  sigmaX: 4.0,
-                  sigmaY: 4.0,
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 100 + 40,
+            child: widget.myProfile.titlePhoto == "NA"
+                ? Image.asset('assets/noimagefound.png')
+                : Image.network(
+                    widget.myProfile.titlePhoto,
+                    alignment: Alignment.center,
+                    fit: BoxFit.fitWidth,
+                  ),
+          ),
+          BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 4.0,
+              sigmaY: 4.0,
+            ),
+            child: Column(
+              children: [
+                const SizedBox(
+                  width: 100,
+                  height: 100,
                 ),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      width: 100,
-                      height: 100,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 100,
-                      decoration: ShapeDecoration(
-                        color: Theme.of(context).backgroundColor,
-                        // color: Colors.red,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(40.0),
-                            topRight: Radius.circular(40.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                constraints: BoxConstraints(
-                  minHeight: screenSize.height - 150 + 10,
-                ),
-                padding: const EdgeInsets.only(top: 100), // Padding For Profile
-                child: Container(
+                Container(
                   width: double.infinity,
+                  height: 100,
                   decoration: ShapeDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.white.withOpacity(0.07),
-                        Colors.grey.shade800.withOpacity(0.09),
-                        Theme.of(context).backgroundColor.withOpacity(0.0),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
+                    color: Theme.of(context).backgroundColor,
+                    // color: Colors.red,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(40.0),
@@ -106,33 +75,60 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Divider(height: 150 / 2, color: Colors.transparent),
-                      profileWidgets(),
-                    ],
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            constraints: BoxConstraints(
+              minHeight: screenSize.height - 150 + 10,
+            ),
+            padding: const EdgeInsets.only(top: 100), // Padding For Profile
+            child: Container(
+              width: double.infinity,
+              decoration: ShapeDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.white.withOpacity(0.07),
+                    Colors.grey.shade800.withOpacity(0.09),
+                    Theme.of(context).backgroundColor.withOpacity(0.0),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40.0),
+                    topRight: Radius.circular(40.0),
                   ),
                 ),
               ),
-              Container(
-                width: 150,
-                height: 150,
-                margin: EdgeInsets.only(
-                    left: screenSize.width * 0.5 - 150 / 2, top: 100 - 150 / 2),
-                padding: const EdgeInsets.all(5.0),
-                child: CircleAvatar(
-                  backgroundColor: Theme.of(context).cardColor,
-                  radius: 150 / 2,
-                  foregroundImage: widget.myProfile.titlePhoto == "NA"
-                      ? Image.asset('assets/noimagefound.png').image
-                      : Image.network(widget.myProfile.titlePhoto).image,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Divider(height: 150 / 2, color: Colors.transparent),
+                  profileWidgets(),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ],
+          Container(
+            width: 150,
+            height: 150,
+            margin: EdgeInsets.only(
+                left: screenSize.width * 0.5 - 150 / 2, top: 100 - 150 / 2),
+            padding: const EdgeInsets.all(5.0),
+            child: CircleAvatar(
+              backgroundColor: Theme.of(context).cardColor,
+              radius: 150 / 2,
+              foregroundImage: widget.myProfile.titlePhoto == "NA"
+                  ? Image.asset('assets/noimagefound.png').image
+                  : Image.network(widget.myProfile.titlePhoto).image,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
