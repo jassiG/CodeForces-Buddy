@@ -1,6 +1,6 @@
 # CodeForces Buddy
 
-A Companion app for Competitive Programmers on CodeFOrces Platform.
+A Companion app for Competitive Programmers on CodeForces Platform.
 
 Progress so far:
 ___
